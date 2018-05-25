@@ -13,5 +13,23 @@ flowControlAnswers = {
    */
   fizzBuzz: function fizzBuzz(num) {
 
+    //---
+    //  Make sure that num is a valid number.
+    //---
+    if(isNaN(num)) {
+      return false;
+    }
+
+    modThree = num % 3;
+    modFive = num % 5;
+    if(modThree === 0 && modFive === 0) {
+      return 'fizzbuzz';
+    } else if(modThree === 0) {
+      return "fizz";
+    } else if(modFive === 0) {
+      return "buzz"
+    } else {
+      return num;
+    }
   },
 };
