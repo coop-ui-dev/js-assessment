@@ -18,6 +18,21 @@ recursionAnswers = {
    */
   listFiles: function listFiles(data, dirName) {
 
+    var sibArray = [];
+    if(dirName == data.dirName || dirName == undefined) {
+      sibArray = sibArray.concat(data.files);
+      data.subDirs.forEach(function(subDir) {
+        sibArray = sibArray.concat(listFiles(subDir));
+      });
+      return sibArray;
+    } else if(dirName != data.dirName) {
+      data.subDirs.forEach(function(subDir) {
+        sibArray = sibArray.concat(listFiles(subDir, dirName));
+      })
+    }
+
+    return sibArray;
+  
   },
 
   /**
@@ -31,5 +46,10 @@ recursionAnswers = {
    */
   fibonacci: function fibonacci(n) {
 
+    if(n < 2) {
+      return n;
+    } else {
+      return this.fibonacci(n - 2) + this.fibonacci(n - 1);
+    }
   },
 };
