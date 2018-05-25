@@ -7,7 +7,13 @@ asyncAnswers = {
    * @returns {then: function} A promise like object containing a then property.
    */
   async: function async(value) {
-
+    return new Promise(function(success, failure) {
+      if(value != undefined) {
+        success(value);
+      } else {
+        failure("value was undefined");
+      }
+    });
   },
 
   /**
@@ -22,5 +28,20 @@ asyncAnswers = {
    */
   manipulateRemoteData: function manipulateRemoteData(url) {
 
+    //---
+    //  I think this is what you're looking for.  I had to look at the test case
+    //  and the data file and make some assumptions.
+    //---
+    return new Promise(function(success, failure) {
+      $.ajax(url).done(function(data) {
+        var retArray = [];
+        data.people.forEach(function(value) { retArray.push(value.name); });
+        retArray.sort();
+        success(retArray);
+      })
+      .fail(function(error) {
+        failure(error);
+      })
+    });
   },
 };
