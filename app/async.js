@@ -34,10 +34,13 @@ asyncAnswers = {
     //---
     return new Promise(function(success, failure) {
       $.ajax(url).done(function(data) {
-        var retArray = [];
-        data.people.forEach(function(value) { retArray.push(value.name); });
-        retArray.sort();
-        success(retArray);
+        if(data != undefined && data.hasOwnProperty('people')) {
+          var retArray = Array.from(data.people, function(item) { return item.name});
+          retArray.sort();
+          success(retArray);
+        } else {
+          failure("data does not contain correct property");
+        }
       })
       .fail(function(error) {
         failure(error);
